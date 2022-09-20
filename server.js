@@ -14,12 +14,7 @@ connectDB()
 const app = express()
 
 // Cors
-app.use(
-  cors({
-    origin: 'https://ecommerce-backend-00fl.onrender.com',
-    optionsSuccessStatus: 200,
-  })
-)
+app.use(cors({ origin: '*' }))
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
