@@ -51,7 +51,7 @@ const productSchema = Schema(
       required: true,
       default: 0,
     },
-    numReveiws: {
+    numReviews: {
       type: Number,
       required: true,
       default: 0,
