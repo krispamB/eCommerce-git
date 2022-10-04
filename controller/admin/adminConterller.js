@@ -4,7 +4,7 @@ import User from '../../models/User.js'
 /* 
 @route   GET api/user
 @desc    Get all users
-@access  Private/Admin
+
 */
 const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find({})
