@@ -87,7 +87,7 @@ const createProduct = asyncHandler(async (req, res) => {
 @access  Private/Admin
 */
 const updateProduct = asyncHandler(async (req, res) => {
-  const { name, price, description, brand, category, countInStock } = req.body
+  const { name, price, description, brand, category, countInStock, image } = req.body
   const product = await Product.findById(req.params.id)
   if (!product) {
     res.status(404)
@@ -95,6 +95,7 @@ const updateProduct = asyncHandler(async (req, res) => {
   } else {
     product.name = name
     product.price = price
+    product.image = image
     product.description = description
     product.brand = brand
     product.category = category
