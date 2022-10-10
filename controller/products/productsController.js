@@ -7,22 +7,22 @@ import Product from '../../models/Product.js'
 @access  Public
 */
 const getProducts = asyncHandler(async (req, res) => {
-  try {
-    const keyword = req.query.keyword
-      ? {
-          name: {
-            $regex: req.query.keyword,
-            $options: 'i',
-          },
-        }
-      : {}
+  const pageSize = 10
+  const page = Number(req.query.pageNumber) || 1
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {}
+  const count = await Product.countDocuments({ ...keyword })
+  const products = await Product.find({ ...keyword })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1))
 
-    const products = await Product.find({ ...keyword })
-
-    res.status(200).json(products)
-  } catch (error) {
-    console.error(error)
-  }
+  res.status(200).json({ products, page, pages: Math.ceil(count / pageSize) })
 })
 
 /* 
@@ -87,7 +87,8 @@ const createProduct = asyncHandler(async (req, res) => {
 @access  Private/Admin
 */
 const updateProduct = asyncHandler(async (req, res) => {
-  const { name, price, description, brand, category, countInStock, image } = req.body
+  const { name, price, description, brand, category, countInStock, image } =
+    req.body
   const product = await Product.findById(req.params.id)
   if (!product) {
     res.status(404)
@@ -119,7 +120,7 @@ const createProductReview = asyncHandler(async (req, res) => {
     throw new Error('Product not found')
   } else {
     console.log(product)
-    const alreadyReveiwed = product.reveiws.find(
+    const alreadyReveiwed = product.reviews.find(
       (r) => r.user.toString() === req.user._id.toString()
     )
 
@@ -128,20 +129,20 @@ const createProductReview = asyncHandler(async (req, res) => {
       throw new Error('Product already reviewed')
     }
 
-    const reveiw = {
+    const review = {
       user: req.user._id,
       name: req.user.name,
       rating: Number(rating),
       comment,
     }
 
-    product.reveiws.push(reveiw)
+    product.reviews.push(review)
 
-    product.numReveiws = product.reveiws.length
+    product.numReviews = product.reviews.length
 
     product.rating =
-      product.reveiws.reduce((acc, item) => item.rating + acc, 0) /
-      product.reveiws.length
+      product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+      product.reviews.length
 
     await product.save()
     res.status(201).json({ message: 'Review added' })
@@ -157,7 +158,6 @@ const getTopProducts = asyncHandler(async (req, res) => {
   const products = await Product.find({}).sort({ rating: -1 }).limit(3)
 
   res.json(products)
-
 })
 
 export {
@@ -167,5 +167,5 @@ export {
   createProduct,
   updateProduct,
   createProductReview,
-  getTopProducts
+  getTopProducts,
 }

@@ -45,7 +45,7 @@ const productSchema = Schema(
       type: String,
       required: true,
     },
-    reveiws: [reveiwSchema],
+    reviews: [reveiwSchema],
     rating: {
       type: Number,
       required: true,
