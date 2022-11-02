@@ -7,7 +7,7 @@ This is a REST api using [Express](https://expressjs.com/)
 $ npm install
 ```
 
-## Seeder
+# Seeder
 ```bash
 # import 
 $ npm run data:import
