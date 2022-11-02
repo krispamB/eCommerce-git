@@ -9,6 +9,7 @@ $ npm install
 
 # Running the app
 ```bash
+# Data seeder
 # import 
 $ npm run data:import
 # destroy
