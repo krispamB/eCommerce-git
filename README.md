@@ -7,8 +7,9 @@ This is a REST api using [Express](https://expressjs.com/)
 $ npm install
 ```
 
-## Seeder
+# Running the app
 ```bash
+# Data seeder
 # import 
 $ npm run data:import
 # destroy
@@ -26,9 +27,7 @@ $ npm run server
 
 ```
 
-## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
 ## Stay in touch
 
