@@ -40,6 +40,8 @@ const updateUser = asyncHandler(async (req, res) => {
     user.email = req.body.email || user.email
     if (req.body.isAdmin) {
       user.isAdmin = req.body.isAdmin
+    } else {
+      user.isAdmin = false
     }
 
     const updatedUser = await user.save()
